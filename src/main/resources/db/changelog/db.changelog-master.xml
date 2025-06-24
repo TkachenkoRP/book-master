@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.31.xsd">
+
+    <include file="2025/06/24-01-create-table-book.xml" relativeToChangelogFile="true"/>
+    <include file="2025/06/24-02-create-table-book-author.xml" relativeToChangelogFile="true"/>
+    <include file="2025/06/24-03-create-table-book-genre.xml" relativeToChangelogFile="true"/>
+    <include file="2025/06/24-04-add-foreign-keys.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
