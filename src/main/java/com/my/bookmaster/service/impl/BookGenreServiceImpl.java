@@ -1,5 +1,6 @@
 package com.my.bookmaster.service.impl;
 
+import com.my.bookmaster.exception.EntityNotFoundException;
 import com.my.bookmaster.mapper.BookGenreMapper;
 import com.my.bookmaster.model.BookGenre;
 import com.my.bookmaster.repository.BookGenreRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 @Service
@@ -26,7 +28,9 @@ public class BookGenreServiceImpl implements BookGenreService {
     @Transactional(readOnly = true)
     @Override
     public BookGenre getById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(MessageFormat.format(
+                "Жанр книги с ID {0} не найден!", id
+        )));
     }
 
     @Transactional
