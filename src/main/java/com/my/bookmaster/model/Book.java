@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,12 +24,8 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    @ManyToOne
-    @JoinColumn(name = "author_id")
-    private BookAuthor author;
-    @ManyToOne
-    @JoinColumn(name = "genre_id")
-    private BookGenre genre;
+    private Long authorId;
+    private Long genreId;
 
     @Override
     public final boolean equals(Object o) {
