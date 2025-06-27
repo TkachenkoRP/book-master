@@ -3,9 +3,12 @@ package com.my.bookmaster.service.impl;
 import com.my.bookmaster.exception.EntityNotFoundException;
 import com.my.bookmaster.mapper.BookMapper;
 import com.my.bookmaster.model.Book;
+import com.my.bookmaster.model.BookFilter;
 import com.my.bookmaster.repository.BookRepository;
+import com.my.bookmaster.repository.specification.BookSpecification;
 import com.my.bookmaster.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +24,9 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Book> getAll() {
-        return repository.findAll();
+    public List<Book> getAll(BookFilter filter) {
+        Specification<Book> spec = BookSpecification.withFilter(filter);
+        return repository.findAll(spec);
     }
 
     @Transactional(readOnly = true)

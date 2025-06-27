@@ -2,6 +2,7 @@ package com.my.bookmaster.controller;
 
 import com.my.bookmaster.mapper.BookMapper;
 import com.my.bookmaster.model.Book;
+import com.my.bookmaster.model.BookFilter;
 import com.my.bookmaster.model.dto.BookRequestDto;
 import com.my.bookmaster.model.dto.BookResponseDto;
 import com.my.bookmaster.service.BookService;
@@ -27,8 +28,8 @@ public class BookController {
     private final BookMapper bookMapper;
 
     @GetMapping
-    public List<BookResponseDto> getAll() {
-        List<Book> books = bookService.getAll();
+    public List<BookResponseDto> getAll(BookFilter filter) {
+        List<Book> books = bookService.getAll(filter);
         return bookMapper.toDto(books);
     }
 

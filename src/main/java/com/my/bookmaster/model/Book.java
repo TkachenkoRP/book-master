@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -19,6 +20,7 @@ import java.util.Objects;
 @Setter
 @Entity(name = "book")
 @ToString
+@FieldNameConstants
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
