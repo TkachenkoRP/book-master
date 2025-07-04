@@ -1,5 +1,6 @@
 package com.my.bookmaster.controller;
 
+import com.my.bookmaster.annotation.Loggable;
 import com.my.bookmaster.mapper.BookGenreMapper;
 import com.my.bookmaster.model.BookGenre;
 import com.my.bookmaster.model.dto.BookGenreRequestDto;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/book-genre")
 @RequiredArgsConstructor
+@Loggable
 public class BookGenreController {
 
     private final BookGenreService bookGenreService;

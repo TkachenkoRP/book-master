@@ -26,3 +26,5 @@ app:
     secret: "SecretKey012345678901234567890123SecretKey012345678901234567890123"
     tokenExpiration: 3m
     refreshTokenExpiration: 30m
+  loggable:
+    enabled: true

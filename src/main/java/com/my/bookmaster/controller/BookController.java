@@ -1,5 +1,6 @@
 package com.my.bookmaster.controller;
 
+import com.my.bookmaster.annotation.Loggable;
 import com.my.bookmaster.mapper.BookMapper;
 import com.my.bookmaster.model.Book;
 import com.my.bookmaster.model.BookFilter;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/book")
 @RequiredArgsConstructor
+@Loggable
 public class BookController {
 
     private final BookService bookService;

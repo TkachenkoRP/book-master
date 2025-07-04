@@ -1,5 +1,6 @@
 package com.my.bookmaster.controller;
 
+import com.my.bookmaster.annotation.Loggable;
 import com.my.bookmaster.mapper.BookAuthorMapper;
 import com.my.bookmaster.model.BookAuthor;
 import com.my.bookmaster.model.dto.BookAuthorRequestDto;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/book-author")
 @RequiredArgsConstructor
+@Loggable
 public class BookAuthorController {
 
     private final BookAuthorService bookAuthorService;
