@@ -1,6 +1,7 @@
 package com.my.bookmaster.controller;
 
 import com.my.bookmaster.exception.EntityNotFoundException;
+import com.my.bookmaster.exception.RefreshTokenException;
 import com.my.bookmaster.model.dto.ErrorResponseDto;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -32,5 +33,11 @@ public class ExceptionHandlerController {
         String errorMessage = String.join(";", errorMessages);
 
         return new ErrorResponseDto(errorMessage);
+    }
+
+    @ExceptionHandler(RefreshTokenException.class)
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    public ErrorResponseDto refreshTokenException(RefreshTokenException e) {
+        return new ErrorResponseDto(e.getLocalizedMessage());
     }
 }
