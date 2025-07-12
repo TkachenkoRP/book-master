@@ -1,4 +1,11 @@
 package com.my.bookmaster.model.dto;
 
-public record RefreshTokenResponseDto(String accessToken, String refreshToken) {
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Ответ с новыми токенами")
+public record RefreshTokenResponseDto(
+        @Schema(description = "Access token")
+        String accessToken,
+        @Schema(description = "Refresh token")
+        String refreshToken) {
 }

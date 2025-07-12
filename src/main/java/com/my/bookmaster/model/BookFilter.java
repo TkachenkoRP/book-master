@@ -1,4 +1,13 @@
 package com.my.bookmaster.model;
 
-public record BookFilter(String title, String author, String genre) {
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(description = "Фильтр для поиска книг")
+public record BookFilter(
+        @Schema(description = "Название книги")
+        String title,
+        @Schema(description = "Автор книги")
+        String author,
+        @Schema(description = "Жанр книги")
+        String genre) {
 }

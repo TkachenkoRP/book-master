@@ -1,6 +1,7 @@
 package com.my.bookmaster.controller;
 
 import com.my.bookmaster.annotation.Loggable;
+import com.my.bookmaster.controller.doc.BookGenreControllerDoc;
 import com.my.bookmaster.mapper.BookGenreMapper;
 import com.my.bookmaster.model.BookGenre;
 import com.my.bookmaster.model.dto.BookGenreRequestDto;
@@ -23,7 +24,7 @@ import java.util.List;
 @RequestMapping("api/book-genre")
 @RequiredArgsConstructor
 @Loggable
-public class BookGenreController {
+public class BookGenreController implements BookGenreControllerDoc {
 
     private final BookGenreService bookGenreService;
     private final BookGenreMapper bookGenreMapper;
@@ -56,7 +57,7 @@ public class BookGenreController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable long id) {
+    public void delete(@PathVariable Long id) {
         bookGenreService.delete(id);
     }
 }

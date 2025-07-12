@@ -1,5 +1,6 @@
 package com.my.bookmaster.controller;
 
+import com.my.bookmaster.exception.AlreadyExitsException;
 import com.my.bookmaster.exception.EntityNotFoundException;
 import com.my.bookmaster.exception.RefreshTokenException;
 import com.my.bookmaster.model.dto.ErrorResponseDto;
@@ -18,6 +19,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorResponseDto entityNotFound(EntityNotFoundException e) {
+        return new ErrorResponseDto(e.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(AlreadyExitsException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public ErrorResponseDto badRequest(AlreadyExitsException e) {
         return new ErrorResponseDto(e.getLocalizedMessage());
     }
 

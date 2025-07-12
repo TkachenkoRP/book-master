@@ -1,6 +1,7 @@
 package com.my.bookmaster.controller;
 
 import com.my.bookmaster.annotation.Loggable;
+import com.my.bookmaster.controller.doc.BookAuthorControllerDoc;
 import com.my.bookmaster.mapper.BookAuthorMapper;
 import com.my.bookmaster.model.BookAuthor;
 import com.my.bookmaster.model.dto.BookAuthorRequestDto;
@@ -23,7 +24,7 @@ import java.util.List;
 @RequestMapping("api/book-author")
 @RequiredArgsConstructor
 @Loggable
-public class BookAuthorController {
+public class BookAuthorController implements BookAuthorControllerDoc {
 
     private final BookAuthorService bookAuthorService;
     private final BookAuthorMapper bookAuthorMapper;
@@ -48,8 +49,8 @@ public class BookAuthorController {
     }
 
     @PatchMapping("/{id}")
-    public BookAuthorResponseDto path(@PathVariable Long id,
-                                      @RequestBody @Valid BookAuthorRequestDto request) {
+    public BookAuthorResponseDto patch(@PathVariable Long id,
+                                       @RequestBody @Valid BookAuthorRequestDto request) {
         BookAuthor bookAuthorEntity = bookAuthorMapper.toEntity(request);
         BookAuthor patchedBookAuthor = bookAuthorService.patch(id, bookAuthorEntity);
         return bookAuthorMapper.toDto(patchedBookAuthor);

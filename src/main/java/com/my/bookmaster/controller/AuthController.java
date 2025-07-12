@@ -1,6 +1,7 @@
 package com.my.bookmaster.controller;
 
 import com.my.bookmaster.annotation.Loggable;
+import com.my.bookmaster.controller.doc.AuthControllerDoc;
 import com.my.bookmaster.exception.AlreadyExitsException;
 import com.my.bookmaster.mapper.UserMapper;
 import com.my.bookmaster.model.UserAuth;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/auth")
 @RequiredArgsConstructor
 @Loggable
-public class AuthController {
+public class AuthController implements AuthControllerDoc {
 
     private final UserService userService;
     private final SecurityService securityService;
