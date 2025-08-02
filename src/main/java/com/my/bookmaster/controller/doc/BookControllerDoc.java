@@ -7,10 +7,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import java.util.List;
 
+@Tag(name = "Book", description = "Контроллер для работы с книгами")
 public interface BookControllerDoc {
     @Operation(summary = "Получить все книги", description = "Возвращает список всех книг с применением фильтров.")
     @ApiResponses(value = {

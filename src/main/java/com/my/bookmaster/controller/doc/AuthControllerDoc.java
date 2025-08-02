@@ -10,8 +10,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestBody;
 
+@Tag(name = "Auth controller", description = "Контроллер для работы с аутентификацией пользователей")
 public interface AuthControllerDoc {
     @Operation(summary = "Регистрация пользователя", description = "Создаёт нового пользователя с указанным email и паролем.")
     @ApiResponses(value = {

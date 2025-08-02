@@ -6,9 +6,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
+@Tag(name = "Book Genre Controller", description = "Контроллер для управления жанрами книг")
 public interface BookGenreControllerDoc {
     @Operation(summary = "Получить все жанры книг", description = "Возвращает список всех жанров книг.")
     @ApiResponses(value = {
