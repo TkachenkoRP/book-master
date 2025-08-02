@@ -2,8 +2,11 @@
 <configuration>
 
     <property name="logDirectory" value="logs"/>
+    <property name="logDebugDirectory" value="logs/debug"/>
+    <property name="logErrorDirectory" value="logs/error"/>
     <property resource="application.yml"/>
     <springProperty name="loggableEnabled" source="app.loggable.enabled"/>
+    <springProperty name="debugEnabled" source="app.log-debug.enabled"/>
 
     <if condition='property("loggableEnabled").contains("true")'>
         <then>
@@ -21,7 +24,7 @@
                     <maxHistory>7</maxHistory>
                 </rollingPolicy>
                 <encoder>
-                    <pattern>%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
+                    <pattern>%d{ISO8601} [%thread] %-5level [%marker] %logger{36} - %msg%n</pattern>
                 </encoder>
             </appender>
 
@@ -35,13 +38,63 @@
         </then>
     </if>
 
+    <if condition='property("debugEnabled").contains("true")'>
+        <then>
+            <appender name="FILE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                    <level>DEBUG</level>
+                    <onMatch>ACCEPT</onMatch>
+                    <onMismatch>DENY</onMismatch>
+                </filter>
+                <file>${logDebugDirectory}/debug.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${logDebugDirectory}/debug.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <maxHistory>7</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>%d{ISO8601} [%thread] %-5level [%marker] %logger{36} - %msg%n</pattern>
+                </encoder>
+            </appender>
+
+            <appender name="ASYNC_FILE_DEBUG" class="ch.qos.logback.classic.AsyncAppender">
+                <appender-ref ref="FILE_DEBUG"/>
+            </appender>
+
+            <logger name="com.my.bookmaster" level="debug">
+                <appender-ref ref="ASYNC_FILE_DEBUG"/>
+            </logger>
+        </then>
+    </if>
+
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{ISO8601} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{ISO8601} [%thread] %-5level [%marker] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
     <root level="info">
         <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ASYNC_FILE_ERROR"/>
     </root>
+
+    <appender name="ASYNC_FILE_ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE_ERROR"/>
+    </appender>
+
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${logErrorDirectory}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logErrorDirectory}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{ISO8601} [%thread] %-5level [%marker] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
 </configuration>

@@ -28,3 +28,5 @@ app:
     refreshTokenExpiration: 30m
   loggable:
     enabled: true
+  log-debug:
+    enabled: true

@@ -10,6 +10,7 @@ import com.my.bookmaster.model.dto.BookResponseDto;
 import com.my.bookmaster.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,6 +26,7 @@ import java.util.List;
 @RequestMapping("api/book")
 @RequiredArgsConstructor
 @Loggable
+@Slf4j
 public class BookController implements BookControllerDoc {
 
     private final BookService bookService;
@@ -33,20 +35,26 @@ public class BookController implements BookControllerDoc {
     @GetMapping
     public List<BookResponseDto> getAll(BookFilter filter) {
         List<Book> books = bookService.getAll(filter);
-        return bookMapper.toDto(books);
+        List<BookResponseDto> bookResponseDtos = bookMapper.toDto(books);
+        log.debug("Get all books - {}", bookResponseDtos);
+        return bookResponseDtos;
     }
 
     @GetMapping("/{id}")
     public BookResponseDto getById(@PathVariable Long id) {
         Book book = bookService.getById(id);
-        return bookMapper.toDto(book);
+        BookResponseDto bookResponseDto = bookMapper.toDto(book);
+        log.debug("Get book by id - {}: {}", id, bookResponseDto);
+        return bookResponseDto;
     }
 
     @PostMapping
     public BookResponseDto post(@RequestBody @Valid BookRequestDto request) {
         Book newBook = bookMapper.toEntity(request);
         Book saved = bookService.save(newBook);
-        return bookMapper.toDto(saved);
+        BookResponseDto savedDto = bookMapper.toDto(saved);
+        log.debug("Created new book - {}", savedDto);
+        return savedDto;
     }
 
     @PatchMapping("/{id}")
@@ -54,11 +62,14 @@ public class BookController implements BookControllerDoc {
                                  @RequestBody @Valid BookRequestDto request) {
         Book bookEntity = bookMapper.toEntity(request);
         Book patchedBook = bookService.patch(id, bookEntity);
-        return bookMapper.toDto(patchedBook);
+        BookResponseDto patchedDto = bookMapper.toDto(patchedBook);
+        log.debug("Patched book with id - {}: {}", id, patchedDto);
+        return patchedDto;
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         bookService.delete(id);
+        log.debug("Deleted book with id - {}", id);
     }
 }

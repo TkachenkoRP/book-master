@@ -14,6 +14,7 @@ import com.my.bookmaster.model.dto.UserResponseDto;
 import com.my.bookmaster.security.SecurityService;
 import com.my.bookmaster.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/auth")
 @RequiredArgsConstructor
 @Loggable
+@Slf4j
 public class AuthController implements AuthControllerDoc {
 
     private final UserService userService;
@@ -35,21 +37,28 @@ public class AuthController implements AuthControllerDoc {
             throw new AlreadyExitsException("Email уже зарегистрирован");
         }
         UserAuth registered = securityService.register(request);
-        return userMapper.toDto(registered);
+        UserResponseDto userResponseDto = userMapper.toDto(registered);
+        log.debug("User register - {}", userResponseDto);
+        return userResponseDto;
     }
 
     @PostMapping("/signin")
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto request) {
-        return securityService.login(request);
+        UserLoginResponseDto loginResponseDto = securityService.login(request);
+        log.debug("User login - {}", loginResponseDto);
+        return loginResponseDto;
     }
 
     @PostMapping("/logout")
     public void logout() {
         securityService.logout();
+        log.debug("User logout");
     }
 
     @PostMapping("/refresh-token")
     public RefreshTokenResponseDto refreshToken(@RequestBody RefreshTokenRequestDto request) {
-        return securityService.refreshToken(request);
+        RefreshTokenResponseDto refreshTokenResponseDto = securityService.refreshToken(request);
+        log.debug("Get refresh token - {}", refreshTokenResponseDto);
+        return refreshTokenResponseDto;
     }
 }
