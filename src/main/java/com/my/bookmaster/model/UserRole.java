@@ -1,5 +1,6 @@
 package com.my.bookmaster.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,8 +14,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Getter
 @Setter
@@ -24,21 +23,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 public class UserRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "roles")
     private RoleType authority;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UserAuth userAuth;
-
-    public GrantedAuthority toAuthority() {
-        return new SimpleGrantedAuthority(authority.name());
-    }
-
-    public static UserRole from(RoleType roleType, UserAuth userAuth) {
-        var role = new UserRole();
-        role.setAuthority(roleType);
-        role.setUserAuth(userAuth);
-        return role;
-    }
 }
